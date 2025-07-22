@@ -4,11 +4,12 @@ const chromium = require("chrome-aws-lambda");
 const scrapeWebsite = async (url) => {
   let browser = null;
   try {
-    const executablePath = await chromium.executablePath || '/usr/bin/chromium-browser';
+    const executablePath = await chromium.executablePath;
+
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: executablePath,
+      executablePath: executablePath || "/usr/bin/chromium-browser",
       headless: chromium.headless,
     });
 

@@ -17,6 +17,9 @@
   "nodemailer": "^7.0.5",
   "pdfkit": "^0.17.1",
   "puppeteer-core": "^10.1.0" 
+  
+},"engines": {
+  "node": ">=18"
 }
 
 }
