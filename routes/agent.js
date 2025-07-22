@@ -20,13 +20,7 @@ router.post("/agent", async (req, res) => {
     const htmlContent = await scrapeWebsite(url);
     const summary = await GeminiChatAgent(htmlContent); //
 
-     await SearchHistory.create({
-      url,
-      summary,
-      fullContent: htmlContent,
-      // userId: req.user?.id, // nếu có auth
-    });
-
+    
     res.json({ summary, fullContent: htmlContent });
   } catch (err) {
     console.error("Agent error:", err);

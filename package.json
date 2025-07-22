@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node app.js"
+    "start": "PUPPETEER_CACHE_DIR=.cache && npx puppeteer browsers install chrome && node app.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

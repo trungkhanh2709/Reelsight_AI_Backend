@@ -7,7 +7,8 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.URL_FRONTEND, // Thay bằng URL Netlify thực tế
+    origin: process.env.URL_FRONTEND, 
+    // origin: 'http://localhost:3000', 
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -16,9 +17,7 @@ app.use(
 // Import routes
 const agentRoute = require("./routes/agent");
 const agentChatRoute = require("./routes/agent-chat");
-const agentReportRoute = require("./routes/report");
 
 app.use("/api", agentRoute);
 app.use("/api", agentChatRoute);
-app.use("/api", agentReportRoute);
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
