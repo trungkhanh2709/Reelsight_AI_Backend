@@ -1,13 +1,14 @@
+const puppeteer = require("puppeteer-core");
 const chromium = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer");
 
 const scrapeWebsite = async (url) => {
   let browser = null;
   try {
+    const executablePath = await chromium.executablePath || '/usr/bin/chromium-browser';
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath || '/usr/bin/google-chrome',
+      executablePath: executablePath,
       headless: chromium.headless,
     });
 
@@ -26,5 +27,6 @@ const scrapeWebsite = async (url) => {
     if (browser) await browser.close();
   }
 };
+
 
 module.exports = scrapeWebsite;
