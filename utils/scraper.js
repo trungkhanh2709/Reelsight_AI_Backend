@@ -1,33 +1,15 @@
-const puppeteer = require("puppeteer-core");
-const chromium = require("chrome-aws-lambda");
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const scrapeWebsite = async (url) => {
-  let browser = null;
   try {
-    const executablePath = await chromium.executablePath;
-
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: executablePath || "/usr/bin/chromium-browser",
-      headless: chromium.headless,
-    });
-
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
-
-    const content = await page.content();
-    const cheerio = require("cheerio");
-    const $ = cheerio.load(content);
+    const res = await axios.get(url, { timeout: 15000 });
+    const $ = cheerio.load(res.data);
     const text = $("body").text();
     return text.replace(/\s+/g, " ").trim().slice(0, 15000);
   } catch (err) {
     console.error("Scrape error:", err?.message || err);
     return "Không thể tải trang web.";
-  } finally {
-    if (browser) await browser.close();
   }
 };
-
-
-module.exports = scrapeWebsite;
+module.exports = { scrapeWebsite };
