@@ -1,6 +1,7 @@
+
 const express = require("express");
 const cors = require("cors");
-const { runAgent } = require("./utils/agent");
+const { GeminiChatAgent } = require("./utils/llm");
 require("dotenv").config();
 
 const app = express();
@@ -12,7 +13,7 @@ app.post("/api/agent", async (req, res) => {
   if (!url) return res.status(400).json({ error: "Thiếu URL" });
 
   try {
-    const summary = await runAgent(url);
+    const summary = await GeminiChatAgent(url);
     res.json({ summary });
   } catch (err) {
     console.error("Lỗi Agent:", err.message);
