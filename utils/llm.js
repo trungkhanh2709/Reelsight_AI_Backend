@@ -7,8 +7,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 async function GeminiChatAgent(htmlContent) {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const prompt = `
-    Bạn là một trợ lý AI thông minh. Hãy đọc và tóm tắt nội dung HTML sau cho người dùng phổ thông:
+  const prompt = `
+    Bạn là một trợ lý AI thông minh. Hãy đọc và tóm tắt nội dung HTML sau cho người dùng phổ thông (chỉ lấy nội dung chính):
     ${htmlContent}
     `;
 

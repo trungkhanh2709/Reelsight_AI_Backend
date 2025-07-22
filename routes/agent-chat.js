@@ -3,29 +3,27 @@ const express = require("express");
 const router = express.Router();
 const { GeminiChatAgent } = require("../utils/llm");
 
+// /routes/agentChat.js
 router.post("/agent-chat", async (req, res) => {
-  const { userInput, fullContent } = req.body;
-
-  const prompt = `
-Bạn là một trợ lý AI.
-Dưới đây là nội dung gốc của một trang web mà người dùng vừa đọc.
---- NỘI DUNG TRANG WEB ---
-${fullContent}
---------------------------
-
-Người dùng hỏi: "${userInput}"
-Hãy trả lời chi tiết và thân thiện như một trợ lý.
-Cuối cùng, hãy đề xuất một hành động tiếp theo phù hợp. (ví dụ: “Bạn có muốn tôi gửi nội dung này qua email không?”)
-`;
+  const { messages, fullContent } = req.body;
 
   try {
-const reply = await GeminiChatAgent(prompt);
-    res.json({ response: reply });
+    const fullPrompt = messages
+      .map((m) => `${m.role === "user" ? "User" : "Agent"}: ${m.content}`)
+      .join("\n");
+
+    const finalPrompt = `Dưới đây là nội dung trang web:\n${fullContent}\n\nLịch sử hội thoại:\n${fullPrompt}\n\nAgent hãy trả lời câu hỏi mới nhất của User.`;
+
+    const response = await GeminiChatAgent(finalPrompt);
+
+    res.json({ response });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Agent error." });
+    console.error("Lỗi xử lý chat:", err);
+    res.status(500).json({ error: "Lỗi Agent." });
   }
 });
+
+
 
 
 module.exports = router;
