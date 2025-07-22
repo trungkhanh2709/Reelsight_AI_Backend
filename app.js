@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
+const puppeteer = require("puppeteer");
 
 const app = express();
 app.use(express.json());
@@ -13,7 +14,10 @@ app.use(
     credentials: true,
   })
 );
-
+const browser = await puppeteer.launch({
+  headless: "new", // or true
+  args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
 // Import routes
 const agentRoute = require("./routes/agent");
 const agentChatRoute = require("./routes/agent-chat");

@@ -1,7 +1,7 @@
 {
-  "scripts": {
-    "start": "PUPPETEER_CACHE_DIR=.cache && npx puppeteer browsers install chrome && node app.js"
-  },
+"scripts": {
+  "start": "bash start.sh"
+},
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "axios": "^1.10.0",
