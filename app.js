@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
@@ -20,4 +21,4 @@ const agentReportRoute = require("./routes/report");
 app.use("/api", agentRoute);
 app.use("/api", agentChatRoute);
 app.use("/api", agentReportRoute);
-app.listen(5000, () => console.log("Server listening on port 5000"));
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
