@@ -10,7 +10,7 @@ const scrapeWebsite = async (url) => {
     return text.replace(/\s+/g, " ").trim().slice(0, 15000);
   } catch (err) {
     console.error("Scrape error:", err?.message || err);
-    return "Không thể tải trang web.";
+    return "Unable to load the website.";
   }
 };
 
