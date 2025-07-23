@@ -1,3 +1,4 @@
+// utils/scraper.js
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -12,4 +13,6 @@ const scrapeWebsite = async (url) => {
     return "Không thể tải trang web.";
   }
 };
+
+// 👇 Đảm bảo export đúng cách
 module.exports = { scrapeWebsite };
